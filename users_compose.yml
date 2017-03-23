@@ -1,0 +1,27 @@
+version: '3'
+services:
+  users_db:
+    build: ./users_db
+    ports:
+      - '3000:5984'
+
+  user_ms:
+    image: blinkbox/user-crud
+    environment:
+      DB_PORT: '5984'
+      DB_ROOT_URL: 'users_db'
+    ports:
+      - '4000:4000'
+    links:
+      - users_db
+
+  auth_ms:
+    image: blinkbox/authentication
+    environment:
+      DB_PORT: '5984'
+      DB_ROOT_URL: 'users_db'
+      SECRET: 'ec6607e21b57ac2ccc5836754893ed33'
+    ports:
+      - '4005:4005'
+    links:
+      - users_db
