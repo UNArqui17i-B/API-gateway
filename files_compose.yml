@@ -1,0 +1,42 @@
+version: '3'
+services:
+  files_db:
+    build: ./files_db
+    ports:
+      - '3010:5984'
+
+  update_ms:
+    image: blinkbox/update
+    environment:
+      DB_PORT: '5984'
+      DB_ROOT_URL: 'files_db'
+    command: bundle exec rails s -p 4020 -b '0.0.0.0'
+    volumes:
+      - .:/update
+    ports:
+      - '4020:4020'
+    links:
+      - files_db
+
+  delete_ms:
+    image: blinkbox/delete
+    environment:
+      HOST_PORT: '4030'
+      BIND_ADDRESS: '0.0.0.0'
+      HOST_DATABASE: 'files_db'
+      HOST_DATABASE_PORT: '3010'
+      DATABASE_NAME: 'blinkbox_files'
+    ports:
+      - '4030:4030'
+    links:
+      - files_db
+
+  upload_ms:
+    image: blinkbox/upload
+    environment:
+      PORT: '5984'
+      ROOT_URL: 'files_db'
+    ports:
+      - '4015:4015'
+    links:
+      - files_db
