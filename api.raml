@@ -1,0 +1,64 @@
+#%RAML 1.0
+title: API Gateway
+baseUri: http://localhost:5000
+mediaType: application/json
+
+# Auth
+securitySchemes:
+    JWT:
+        description: Token based authentication
+        type: x-jwt
+        describedBy:
+            headers:
+                Authorization:
+                    description: Send the token
+                    example: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ
+
+
+# Possible types
+types:
+    User:
+        type: object
+        properties:
+            name: string
+            email: string
+            password: string
+
+    Login:
+        type: object
+        properties:
+            email: string
+            password: string
+
+# Routes
+/api:
+    description: API Gateway for consumming microservices
+
+    # User related
+    /users:
+        post:
+            description: Create a user
+            body:
+                type: User
+
+        /{id}:
+            get:
+                description: Search a user
+
+            /{rev}:
+                put:
+                    description: Update a user
+                    securedBy: JWT
+                    body:
+                        type: User
+
+                delete:
+                    description: Delete a user
+                    securedBy: JWT
+        /login:
+            post:
+                description: Check valid user
+                body:
+                    type: Login
+
+    # File related

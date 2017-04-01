@@ -1,0 +1,45 @@
+{
+  "name": "apiGateway",
+  "private": true,
+  "version": "0.0.1",
+  "description": "API Gateway microservice",
+  "main": "./src/resources.js",
+  "scripts": {
+    "eslint": "eslint src test",
+    "eslint-fix": "npm run eslint -- --fix",
+    "start": "node src/resources.js",
+    "test": "npm run test-mocha && npm run eslint",
+    "test-cov": "istanbul cover node_modules/.bin/_mocha -- --require should --reporter dot --recursive && codecov",
+    "test-travis": "istanbul cover node_modules/.bin/_mocha --report lcovonly -- --require should --reporter dot --recursive && codecov",
+    "test-mocha": "mocha --require should --reporter mocha-better-spec-reporter"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/UNArqui17i-B/UserCRUD.git"
+  },
+  "author": "Miguel Asencio <maasencioh@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/UNArqui17i-B/UserCRUD/issues"
+  },
+  "dependencies": {
+    "body-parser": "^1.17.0",
+    "express": "^4.15.0",
+    "http-status": "^1.0.1",
+    "joi": "^10.2.2",
+    "morgan": "^1.8.1",
+    "puid": "^1.0.5",
+    "request": "^2.80.0"
+  },
+  "devDependencies": {
+    "codecov": "^1.0.1",
+    "eslint": "^3.12.2",
+    "eslint-config-cheminfo": "^1.6.0",
+    "eslint-plugin-no-only-tests": "^1.1.0",
+    "istanbul": "^0.4.5",
+    "mocha": "^3.2.0",
+    "mocha-better-spec-reporter": "^3.1.0",
+    "should": "^11.1.2",
+    "superagent": "^3.5.0"
+  }
+}

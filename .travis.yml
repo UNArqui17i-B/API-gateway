@@ -1,0 +1,11 @@
+language: node_js
+node_js:
+  - node
+  - lts/boron # v6
+  - lts/argon # v4
+services:
+  - couchdb
+before_script:
+  - curl -X PUT localhost:5984/blinkbox_users
+script: "npm run test-travis"
+after_script: "bash <(curl -s https://codecov.io/bash)"
