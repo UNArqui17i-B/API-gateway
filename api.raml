@@ -62,3 +62,41 @@ types:
                     type: Login
 
     # File related
+    /files:
+        /info/{id}:
+            get:
+                description: Get metadata from file
+                securedBy: JWT
+
+        /sharedWith:
+            get:
+                description: Files shared with an user's email
+                securedBy: JWT
+                queryParameters:
+                    email:
+                        type: string
+
+        /ownedBy/{idUser}:
+            get:
+                description: Files owned by the user
+                securedBy: JWT
+
+        /download/{id}:
+            get:
+                description: Downloads the file
+                securedBy: JWT
+
+        /delete/{id}:
+            delete:
+                description: Delete the file
+                securedBy: JWT
+
+        /update/{id}:
+            put:
+                description: Update the file's metadata
+                securedBy: JWT
+
+        /upload:
+            post:
+                description: Creates an uploads the file
+                securedBy: JWT
