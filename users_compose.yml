@@ -43,6 +43,6 @@ services:
     ports:
       - '5000:5000'
     links:
-      - users_ms
+      - user_ms
       - auth_ms
       - notification_ms
