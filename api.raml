@@ -55,11 +55,15 @@ types:
                 delete:
                     description: Delete a user
                     securedBy: JWT
-        /login:
+        /login/{id}:
             post:
                 description: Check valid user
                 body:
                     type: Login
+
+        /email/{id}:
+            put:
+                description: Verifies user by email
 
     # File related
     /files:
