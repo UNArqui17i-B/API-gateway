@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.1",
   "description": "API Gateway microservice",
-  "main": "./src/resources.js",
+  "main": "./src/index.js",
   "scripts": {
     "eslint": "eslint src test",
     "eslint-fix": "npm run eslint -- --fix",
@@ -15,21 +15,20 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/UNArqui17i-B/UserCRUD.git"
+    "url": "https://github.com/UNArqui17i-B/API-gateway.git"
   },
   "author": "Miguel Asencio <maasencioh@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/UNArqui17i-B/UserCRUD/issues"
+    "url": "https://github.com/UNArqui17i-B/API-gateway/issues"
   },
   "dependencies": {
     "body-parser": "^1.17.0",
     "express": "^4.15.0",
     "http-status": "^1.0.1",
-    "joi": "^10.2.2",
     "morgan": "^1.8.1",
-    "puid": "^1.0.5",
-    "request": "^2.80.0"
+    "request": "^2.80.0",
+    "request-promise": "^4.2.0"
   },
   "devDependencies": {
     "codecov": "^1.0.1",

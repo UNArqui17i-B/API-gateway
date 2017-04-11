@@ -5,6 +5,8 @@ const status = require('http-status');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
 
+const HOST_PORT = Number(process.env.HOST_PORT) || 4000;
+
 let app = express();
 
 // config
@@ -12,14 +14,10 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
-const User = require('./models/user');
-User.checkDB((err) => {
-    // eslint-disable-next-line no-console
-    if (err) console.error(err);
-});
-
 // routes
-app.use('/users', require('./services/user')(User));
+const serviceRegistry = require('./serviceRegistry');
+app.use('/users', require('./services/user')(serviceRegistry.users));
+app.use('/files', require('./services/file')(serviceRegistry.files));
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -39,5 +37,5 @@ app.use(function (err, req, res) {
     res.send({'error': err.message});
 });
 
-app.listen(4000);
+app.listen(HOST_PORT);
 
