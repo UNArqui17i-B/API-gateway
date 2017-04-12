@@ -8,13 +8,22 @@ const auth = require('../auth');
 module.exports = function (userServices) {
     const userMicroService = `http://${userServices.userMicroService.host}:${userServices.userMicroService.port}/users`;
     const authMicroService = `http://${userServices.authMicroService.host}:${userServices.authMicroService.port}/authentication`;
-    //const notificationMicroService = `http://${userServices.notificationMicroService.host}:${userServices.notificationMicroService.port}/notification`;
+    const notificationMicroService = `http://${userServices.notificationMicroService.host}:${userServices.notificationMicroService.port}/notification`;
 
     const router = express.Router();
 
     // Create a user
     router.post('/', function (req, res) {
-        request({method: 'POST', url: userMicroService, json: req.body})
+        const user = req.body;
+        request({method: 'POST', url: userMicroService, json: user})
+            .then(() => request({
+                method: 'POST',
+                url: `${notificationMicroService}/confirmation`,
+                json: {
+                    Conf_url: `http://blinkbox.com/confirm/${user.id}`,
+                    Email: user.email
+                }
+            }))
             .then((body) => res.status(status.CREATED).send(body))
             .catch((err) => res.status(status.BAD_REQUEST).send(err));
     });
