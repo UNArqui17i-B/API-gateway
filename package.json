@@ -7,7 +7,7 @@
   "scripts": {
     "eslint": "eslint src test",
     "eslint-fix": "npm run eslint -- --fix",
-    "start": "node src/resources.js",
+    "start": "node src/index.js",
     "test": "npm run test-mocha && npm run eslint",
     "test-cov": "istanbul cover node_modules/.bin/_mocha -- --require should --reporter dot --recursive && codecov",
     "test-travis": "istanbul cover node_modules/.bin/_mocha --report lcovonly -- --require should --reporter dot --recursive && codecov",

@@ -3,13 +3,13 @@ FROM node:7.6-slim
 MAINTAINER Miguel Asencio <maasencioh@gmail.com>
 
 # Create app directory
-WORKDIR /git/user-crud
+WORKDIR /git/api-gateway
 
 # Install app dependencies
-COPY package.json /git/user-crud/
+COPY package.json /git/api-gateway/
 RUN npm install --production
 
 # Bundle app source
-COPY . /git/user-crud/
+COPY . /git/api-gateway/
 
 CMD [ "npm", "start" ]

@@ -5,7 +5,7 @@ const status = require('http-status');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
 
-const HOST_PORT = Number(process.env.HOST_PORT) || 4000;
+const HOST_PORT = Number(process.env.HOST_PORT) || 5000;
 
 let app = express();
 
@@ -17,7 +17,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 // routes
 const serviceRegistry = require('./serviceRegistry');
 app.use('/users', require('./services/user')(serviceRegistry.users));
-app.use('/files', require('./services/file')(serviceRegistry.files));
+//app.use('/files', require('./services/file')(serviceRegistry.files));
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
