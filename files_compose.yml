@@ -9,8 +9,9 @@ services:
     image: blinkbox/update
     environment:
       DB_PORT: '5984'
-      DB_ROOT_URL: 'files_db'
-    command: bundle exec rails s -p 4020 -b '0.0.0.0'
+      DB_URL: 'files_db'
+      SECRET_KEY_BASE: '88e17a0d8bc9aaff8b23b3a64921da46059b175d73966151dd10029934cde9d4fa645c55a2a8e71e4a23778e64ce408caf7c4e5ca7c163d3785c9363f1153e4d'
+    command: bundle exec rails s -e production -p 4020 -b '0.0.0.0'
     volumes:
       - .:/update
     ports:
@@ -22,10 +23,10 @@ services:
     image: blinkbox/delete
     environment:
       HOST_PORT: '4030'
-      BIND_ADDRESS: '0.0.0.0'
-      HOST_DATABASE: 'files_db'
-      HOST_DATABASE_PORT: '3010'
-      DATABASE_NAME: 'blinkbox_files'
+      HOST_URL: '0.0.0.0'
+      DB_URL: 'files_db'
+      DB_PORT: '3010'
+      DB_NMA: 'blinkbox_files'
     ports:
       - '4030:4030'
     links:
@@ -34,9 +35,25 @@ services:
   upload_ms:
     image: blinkbox/upload
     environment:
-      PORT: '5984'
-      ROOT_URL: 'files_db'
+      DB_PORT: '5984'
+      DB_URL: 'files_db'
     ports:
       - '4015:4015'
     links:
       - files_db
+
+  api_gateway:
+    build: .
+    environment:
+      UPDATE_PORT: '4020'
+      UPDATE_HOST: 'update_ms'
+      DELETE_PORT: '4030'
+      DELETE_HOST: 'delete_ms'
+      UPLOAD_PORT: '4015'
+      UPLOAD_HOST: 'upload_ms'
+    ports:
+      - '5000:5000'
+    links:
+      - update_ms
+      - delete_ms
+      - upload_ms
