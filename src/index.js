@@ -17,7 +17,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 // routes
 const serviceRegistry = require('./serviceRegistry');
 app.use('/users', require('./services/user')(serviceRegistry.users));
-//app.use('/files', require('./services/file')(serviceRegistry.files));
+app.use('/files', require('./services/file')(serviceRegistry.users, serviceRegistry.files));
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
