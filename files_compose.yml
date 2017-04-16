@@ -2,6 +2,8 @@ version: '3'
 services:
   files_db:
     build: ./files_db
+    logging:
+          driver: 'none'
     ports:
       - '3010:5984'
 

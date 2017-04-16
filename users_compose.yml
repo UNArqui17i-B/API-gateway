@@ -2,6 +2,8 @@ version: '3'
 services:
   users_db:
     build: ./users_db
+    logging:
+      driver: 'none'
     ports:
       - '3000:5984'
 
