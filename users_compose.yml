@@ -2,6 +2,8 @@ version: '3'
 services:
   users_db:
     build: ./users_db
+    logging:
+      driver: 'none'
     ports:
       - '3000:5984'
 
@@ -9,7 +11,7 @@ services:
     image: blinkbox/user-crud
     environment:
       DB_PORT: '5984'
-      DB_ROOT_URL: 'users_db'
+      DB_URL: 'users_db'
     ports:
       - '4000:4000'
     links:
@@ -19,8 +21,8 @@ services:
     image: blinkbox/authentication
     environment:
       DB_PORT: '5984'
-      DB_ROOT_URL: 'users_db'
-      SECRET: 'ec6607e21b57ac2ccc5836754893ed33'
+      DB_URL: 'users_db'
+      JWT_SECRET: 'ec6607e21b57ac2ccc5836754893ed33'
     ports:
       - '4005:4005'
     links:
@@ -28,5 +30,27 @@ services:
 
   notification_ms:
     image: blinkbox/notification
+    environment:
+      NAME: "Blinkbox Project"
+      USERNAME: "blinkboxunal@gmail.com"
+      PASSWORD: "bl1nkb0x"
+      EMAIL_SERVER: "smtp.gmail.com"
+      PORT: '587'
     ports:
-      - "4010:4010"
+      - '4010:4010'
+
+  api_gateway:
+    build: .
+    environment:
+      USER_PORT: '4000'
+      USER_HOST: 'user_ms'
+      AUTH_PORT: '4005'
+      AUTH_HOST: 'auth_ms'
+      NOTIFICATION_PORT: '4010'
+      NOTIFICATION_HOST: 'notification_ms'
+    ports:
+      - '5000:5000'
+    links:
+      - user_ms
+      - auth_ms
+      - notification_ms
