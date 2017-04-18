@@ -67,10 +67,10 @@ module.exports = function (userServices) {
     });
 
     // Check valid user
-    router.post('/login/:id', function (req, res) {
+    router.post('/login', function (req, res) {
         request({
             method: 'POST',
-            url: `${authMicroService}/login/${req.params.id}`,
+            url: `${authMicroService}/login`,
             json: req.body
         })
             .then((body) => res.status(status.OK).send(body))
@@ -82,6 +82,17 @@ module.exports = function (userServices) {
         request({
             method: 'PUT',
             url: `${authMicroService}/email/${req.params.id}`,
+            json: req.body
+        })
+            .then((body) => res.status(status.OK).send(body))
+            .catch((err) => res.status(status.BAD_REQUEST).send(err));
+    });
+
+    // Check valid token
+    router.post('/validate', function (req, res) {
+        request({
+            method: 'POST',
+            url: `${authMicroService}/validate`,
             json: req.body
         })
             .then((body) => res.status(status.OK).send(body))

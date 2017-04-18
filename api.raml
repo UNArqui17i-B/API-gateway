@@ -20,7 +20,8 @@ types:
     User:
         type: object
         properties:
-            name: string
+            firstName: string
+            lastName: string
             email: string
             password: string
 
@@ -45,18 +46,17 @@ types:
             get:
                 description: Search a user
 
-            /{rev}:
-                put:
-                    description: Update a user
-                    securedBy: JWT
-                    body:
-                        type: User
+            put:
+                description: Update a user
+                securedBy: JWT
+                body:
+                    type: User
 
-                delete:
-                    description: Delete a user
-                    securedBy: JWT
+            delete:
+                description: Delete a user
+                securedBy: JWT
 
-        /login/{id}:
+        /login:
             post:
                 description: Check valid user
                 body:
@@ -65,6 +65,14 @@ types:
         /email/{id}:
             put:
                 description: Verifies user by email
+
+        /validate:
+            post:
+                description: Check valid token
+                body:
+                    type: object
+                    properties:
+                        token: string
 
     # File related
     /files:
