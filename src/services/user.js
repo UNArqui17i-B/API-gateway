@@ -79,7 +79,6 @@ module.exports = function (userServices) {
 
     // Verifies user by email
     router.put('/email/:id', function (req, res) {
-        console.log(`${authMicroService}/email/${req.params.id}`);
         request({
             method: 'PUT',
             url: `${authMicroService}/email/${req.params.id}`
