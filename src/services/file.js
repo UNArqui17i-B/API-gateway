@@ -10,6 +10,7 @@ module.exports = function (userServices, fileServices) {
     const deleteMicroService = `http://${fileServices.deleteMicroService.host}:${fileServices.deleteMicroService.port}/delete`;
     const uploadMicroService = `http://${fileServices.uploadMicroService.host}:${fileServices.uploadMicroService.port}/upload`;
     const authMicroService = `http://${userServices.authMicroService.host}:${userServices.authMicroService.port}/authentication`;
+    const accessMicroService = `http://${userServices.accessMicroService.host}:${userServices.accessMicroService.port}/fileAccess`;
 
     const router = express.Router();
 

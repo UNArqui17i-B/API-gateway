@@ -28,7 +28,7 @@ services:
       HOST_URL: '0.0.0.0'
       DB_URL: 'files_db'
       DB_PORT: '3010'
-      DB_NMA: 'blinkbox_files'
+      DB_NAME: 'blinkbox_files'
     ports:
       - '4030:4030'
     links:
@@ -44,6 +44,19 @@ services:
     links:
       - files_db
 
+  file_access_ms:
+    image: blinkbox/fileaccess
+    ports:
+      - '4025:4025'
+    environment:
+      DB_NAME: 'blinkbox_files'
+      DB_URL: 'files_db'
+      DB_PORT: '5984'
+      HOST_PORT: '4025'
+      HOST_URL: '0.0.0.0'
+    links:
+      - files_db
+
   api_gateway:
     build: .
     environment:
@@ -53,9 +66,12 @@ services:
       DELETE_HOST: 'delete_ms'
       UPLOAD_PORT: '4015'
       UPLOAD_HOST: 'upload_ms'
+      ACCESS_PORT: '4025'
+      ACCESS_HOST: 'file_access_ms'
     ports:
       - '5000:5000'
     links:
       - update_ms
       - delete_ms
       - upload_ms
+      - file_access_ms
