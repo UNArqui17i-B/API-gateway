@@ -2,6 +2,8 @@ version: '3'
 services:
   users_db:
     build: ./users_db
+    logging:
+      driver: 'none'
     ports:
       - '3000:5984'
 
@@ -28,6 +30,12 @@ services:
 
   notification_ms:
     image: blinkbox/notification
+    environment:
+      NAME: "Blinkbox Project"
+      USERNAME: "blinkboxunal@gmail.com"
+      PASSWORD: "bl1nkb0x"
+      EMAIL_SERVER: "smtp.gmail.com"
+      PORT: '587'
     ports:
       - '4010:4010'
 

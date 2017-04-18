@@ -1,6 +1,13 @@
 # BlinkBox
 > Entry point for app deployment
 
+## General deployment
+```bash
+docker-compose build
+docker-compose pull
+docker-compose up
+```
+
 ## Users deployment
 ```bash
 docker-compose -f users_compose.yml build

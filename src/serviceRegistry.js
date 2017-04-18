@@ -27,6 +27,10 @@ const files = {
     uploadMicroService: {
         port: process.env.UPLOAD_PORT || 4015,
         host: process.env.UPLOAD_HOST || 'localhost'
+    },
+    accessMicroService: {
+        port: process.env.ACCESS_PORT || 4025,
+        host: process.env.ACCESS_HOST || 'localhost'
     }
 };
 

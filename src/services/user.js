@@ -16,11 +16,11 @@ module.exports = function (userServices) {
     router.post('/', function (req, res) {
         const user = req.body;
         request({method: 'POST', url: userMicroService, json: user})
-            .then(() => request({
+            .then((created) => request({
                 method: 'POST',
                 url: `${notificationMicroService}/confirmation`,
                 json: {
-                    Conf_url: `http://blinkbox.com/confirm/${user.id}`,
+                    Conf_url: `http://blinkbox.com/confirm/${created.id}`,
                     Email: user.email
                 }
             }))
@@ -36,12 +36,12 @@ module.exports = function (userServices) {
     });
 
     // Update a user
-    router.put('/:id/:rev', function (req, res) {
+    router.put('/:id', function (req, res) {
         auth(req.headers.authorization, authMicroService, (error) => {
             if (!error && !error.error) {
                 request({
                     method: 'PUT',
-                    url: `${userMicroService}/${req.params.id}/${req.params.rev}`,
+                    url: `${userMicroService}/${req.params.id}`,
                     json: req.body
                 })
                     .then((body) => res.status(status.OK).send(body))
@@ -53,10 +53,10 @@ module.exports = function (userServices) {
     });
 
     // Delete a user
-    router.delete('/:id/:rev', function (req, res) {
+    router.delete('/:id', function (req, res) {
         auth(req.headers.authorization, authMicroService, (error) => {
             if (!error && !error.error) {
-                request.delete(`${userMicroService}/${req.params.id}/${req.params.rev}`)
+                request.delete(`${userMicroService}/${req.params.id}`)
                     .then((body) => res.status(status.OK).send(body))
                     .catch((err) => res.status(status.BAD_REQUEST).send(err));
             } else {
@@ -67,10 +67,10 @@ module.exports = function (userServices) {
     });
 
     // Check valid user
-    router.post('/login/:id', function (req, res) {
+    router.post('/login', function (req, res) {
         request({
             method: 'POST',
-            url: `${authMicroService}/login/${req.params.id}`,
+            url: `${authMicroService}/login`,
             json: req.body
         })
             .then((body) => res.status(status.OK).send(body))
@@ -81,7 +81,17 @@ module.exports = function (userServices) {
     router.put('/email/:id', function (req, res) {
         request({
             method: 'PUT',
-            url: `${authMicroService}/email/${req.params.id}`,
+            url: `${authMicroService}/email/${req.params.id}`
+        })
+            .then((body) => res.status(status.OK).send(body))
+            .catch((err) => res.status(status.BAD_REQUEST).send(err));
+    });
+
+    // Check valid token
+    router.post('/validate', function (req, res) {
+        request({
+            method: 'POST',
+            url: `${authMicroService}/validate`,
             json: req.body
         })
             .then((body) => res.status(status.OK).send(body))

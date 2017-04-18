@@ -20,7 +20,8 @@ types:
     User:
         type: object
         properties:
-            name: string
+            firstName: string
+            lastName: string
             email: string
             password: string
 
@@ -45,18 +46,17 @@ types:
             get:
                 description: Search a user
 
-            /{rev}:
-                put:
-                    description: Update a user
-                    securedBy: JWT
-                    body:
-                        type: User
+            put:
+                description: Update a user
+                securedBy: JWT
+                body:
+                    type: User
 
-                delete:
-                    description: Delete a user
-                    securedBy: JWT
+            delete:
+                description: Delete a user
+                securedBy: JWT
 
-        /login/{id}:
+        /login:
             post:
                 description: Check valid user
                 body:
@@ -66,6 +66,14 @@ types:
             put:
                 description: Verifies user by email
 
+        /validate:
+            post:
+                description: Check valid token
+                body:
+                    type: object
+                    properties:
+                        token: string
+
     # File related
     /files:
         /info/{id}:
@@ -73,13 +81,10 @@ types:
                 description: Get metadata from file
                 securedBy: JWT
 
-        /sharedWith:
+        /sharedWith/{email}:
             get:
                 description: Files shared with an user's email
                 securedBy: JWT
-                queryParameters:
-                    email:
-                        type: string
 
         /ownedBy/{idUser}:
             get:
@@ -101,7 +106,7 @@ types:
                 description: Update the file's metadata
                 securedBy: JWT
 
-        /upload:
+        /upload/{email}:
             post:
                 description: Creates an uploads the file
                 securedBy: JWT

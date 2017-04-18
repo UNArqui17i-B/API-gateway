@@ -14,10 +14,24 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
+// CORS
+app.all('/*', function (req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+    next();
+});
+
+// json content-type
+app.use(function (req, res, next) {
+    res.header('Content-Type', 'application/json');
+    next();
+});
+
 // routes
 const serviceRegistry = require('./serviceRegistry');
-app.use('/users', require('./services/user')(serviceRegistry.users));
-//app.use('/files', require('./services/file')(serviceRegistry.files));
+app.use('/api/users', require('./services/user')(serviceRegistry.users));
+app.use('/api/files', require('./services/file')(serviceRegistry.users, serviceRegistry.files));
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
