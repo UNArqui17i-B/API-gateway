@@ -81,13 +81,10 @@ types:
                 description: Get metadata from file
                 securedBy: JWT
 
-        /sharedWith:
+        /sharedWith/{email}:
             get:
                 description: Files shared with an user's email
                 securedBy: JWT
-                queryParameters:
-                    email:
-                        type: string
 
         /ownedBy/{idUser}:
             get:

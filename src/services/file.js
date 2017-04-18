@@ -14,6 +14,58 @@ module.exports = function (userServices, fileServices) {
 
     const router = express.Router();
 
+    // Get metadata from file
+    router.get('/info/:id', function (req, res) {
+        auth(req.headers.authorization, authMicroService, (error) => {
+            if (!error && !error.error) {
+                request.get(`${accessMicroService}/info/${req.params.id}`)
+                    .then((body) => res.status(status.OK).send(body))
+                    .catch((err) => res.status(status.BAD_REQUEST).send(err));
+            } else {
+                res.status(status.BAD_REQUEST).send(error);
+            }
+        });
+    });
+
+    // Files shared with an user's email
+    router.get('/sharedWith/:email', function (req, res) {
+        auth(req.headers.authorization, authMicroService, (error) => {
+            if (!error && !error.error) {
+                request.get(`${accessMicroService}/sharedWith/${req.params.email}`)
+                    .then((body) => res.status(status.OK).send(body))
+                    .catch((err) => res.status(status.BAD_REQUEST).send(err));
+            } else {
+                res.status(status.BAD_REQUEST).send(error);
+            }
+        });
+    });
+
+    // Files owned by the user
+    router.get('/ownedBy/:id', function (req, res) {
+        auth(req.headers.authorization, authMicroService, (error) => {
+            if (!error && !error.error) {
+                request.get(`${accessMicroService}/ownedBy/${req.params.id}`)
+                    .then((body) => res.status(status.OK).send(body))
+                    .catch((err) => res.status(status.BAD_REQUEST).send(err));
+            } else {
+                res.status(status.BAD_REQUEST).send(error);
+            }
+        });
+    });
+
+    // Downloads the file
+    router.get('/download/:id', function (req, res) {
+        auth(req.headers.authorization, authMicroService, (error) => {
+            if (!error && !error.error) {
+                request.get(`${accessMicroService}/download/${req.params.id}`)
+                    .then((body) => res.status(status.OK).send(body))
+                    .catch((err) => res.status(status.BAD_REQUEST).send(err));
+            } else {
+                res.status(status.BAD_REQUEST).send(error);
+            }
+        });
+    });
+
     // Delete the file
     router.delete('/delete/:id', function (req, res) {
         auth(req.headers.authorization, authMicroService, (error) => {
