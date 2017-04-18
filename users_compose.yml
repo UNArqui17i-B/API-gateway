@@ -30,6 +30,12 @@ services:
 
   notification_ms:
     image: blinkbox/notification
+    environment:
+      NAME: "Blinkbox Project"
+      USERNAME: "blinkboxunal@gmail.com"
+      PASSWORD: "bl1nkb0x"
+      EMAIL_SERVER: "smtp.gmail.com"
+      PORT: '587'
     ports:
       - '4010:4010'
 

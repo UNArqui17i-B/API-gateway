@@ -30,8 +30,8 @@ app.use(function (req, res, next) {
 
 // routes
 const serviceRegistry = require('./serviceRegistry');
-app.use('/users', require('./services/user')(serviceRegistry.users));
-app.use('/files', require('./services/file')(serviceRegistry.users, serviceRegistry.files));
+app.use('/api/users', require('./services/user')(serviceRegistry.users));
+app.use('/api/files', require('./services/file')(serviceRegistry.users, serviceRegistry.files));
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

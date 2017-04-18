@@ -16,11 +16,11 @@ module.exports = function (userServices) {
     router.post('/', function (req, res) {
         const user = req.body;
         request({method: 'POST', url: userMicroService, json: user})
-            .then(() => request({
+            .then((created) => request({
                 method: 'POST',
                 url: `${notificationMicroService}/confirmation`,
                 json: {
-                    Conf_url: `http://blinkbox.com/confirm/${user.id}`,
+                    Conf_url: `http://blinkbox.com/confirm/${created.id}`,
                     Email: user.email
                 }
             }))
