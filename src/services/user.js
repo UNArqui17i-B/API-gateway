@@ -36,12 +36,12 @@ module.exports = function (userServices) {
     });
 
     // Update a user
-    router.put('/:id/:rev', function (req, res) {
+    router.put('/:id', function (req, res) {
         auth(req.headers.authorization, authMicroService, (error) => {
             if (!error && !error.error) {
                 request({
                     method: 'PUT',
-                    url: `${userMicroService}/${req.params.id}/${req.params.rev}`,
+                    url: `${userMicroService}/${req.params.id}`,
                     json: req.body
                 })
                     .then((body) => res.status(status.OK).send(body))
@@ -53,10 +53,10 @@ module.exports = function (userServices) {
     });
 
     // Delete a user
-    router.delete('/:id/:rev', function (req, res) {
+    router.delete('/:id', function (req, res) {
         auth(req.headers.authorization, authMicroService, (error) => {
             if (!error && !error.error) {
-                request.delete(`${userMicroService}/${req.params.id}/${req.params.rev}`)
+                request.delete(`${userMicroService}/${req.params.id}`)
                     .then((body) => res.status(status.OK).send(body))
                     .catch((err) => res.status(status.BAD_REQUEST).send(err));
             } else {
@@ -79,10 +79,10 @@ module.exports = function (userServices) {
 
     // Verifies user by email
     router.put('/email/:id', function (req, res) {
+        console.log(`${authMicroService}/email/${req.params.id}`);
         request({
             method: 'PUT',
-            url: `${authMicroService}/email/${req.params.id}`,
-            json: req.body
+            url: `${authMicroService}/email/${req.params.id}`
         })
             .then((body) => res.status(status.OK).send(body))
             .catch((err) => res.status(status.BAD_REQUEST).send(err));
