@@ -22,12 +22,6 @@ app.all('/*', function (req, res, next) {
     next();
 });
 
-// json content-type
-app.use(function (req, res, next) {
-    res.header('Content-Type', 'application/json');
-    next();
-});
-
 // routes
 const serviceRegistry = require('./serviceRegistry');
 app.use('/api/users', require('./services/user')(serviceRegistry.users));
