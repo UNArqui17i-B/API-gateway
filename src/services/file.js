@@ -54,10 +54,10 @@ module.exports = function (userServices, fileServices) {
     });
 
     // Downloads the file
-    router.get('/download/:id', function (req, res) {
+    router.get('/download/:id/:email', function (req, res) {
         auth(req.headers.authorization, authMicroService, (error) => {
             if (!error && !error.error) {
-                request.get(`${accessMicroService}/download/${req.params.id}`)
+                request.get(`${accessMicroService}/download/${req.params.id}/${req.params.email}`)
                     .then((body) => res.status(status.OK).send(body))
                     .catch((err) => res.status(status.BAD_REQUEST).send(err));
             } else {
@@ -70,7 +70,7 @@ module.exports = function (userServices, fileServices) {
     router.delete('/delete/:id', function (req, res) {
         auth(req.headers.authorization, authMicroService, (error) => {
             if (!error && !error.error) {
-                request.delete(`${deleteMicroService}/delete/${req.params.id}`)
+                request.delete(`${deleteMicroService}/delete/file/${req.params.id}`)
                     .then((body) => res.status(status.OK).send(body))
                     .catch((err) => res.status(status.BAD_REQUEST).send(err));
             } else {
@@ -86,11 +86,11 @@ module.exports = function (userServices, fileServices) {
                 const file = req.body;
 
                 let updatePromises = [];
-                if (file.share) {
+                if (file.shared) {
                     updatePromises.push(request({
                         method: 'PUT',
                         url: `${updateMicroService}/share/${req.params.id}`,
-                        json: file.share
+                        json: file.shared
                     }));
                 }
 
