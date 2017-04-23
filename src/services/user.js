@@ -20,7 +20,7 @@ module.exports = function (userServices) {
                 method: 'POST',
                 url: `${notificationMicroService}/confirmation`,
                 json: {
-                    Conf_url: `http://blinkbox.com/confirm/${created.id}`,
+                    Conf_url: `http://localhost:8080/confirm?id=${created.id}`,
                     Email: user.email
                 }
             }))
