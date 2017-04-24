@@ -2,6 +2,7 @@ version: '3'
 services:
   couch_db:
     image: klaemo/couchdb:2.0-single
+    restart: always
     logging:
       driver: 'none'
     ports:
