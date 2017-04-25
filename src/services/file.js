@@ -17,7 +17,7 @@ module.exports = function (userServices, fileServices) {
     // Get metadata from file
     router.get('/info/:id', function (req, res) {
         auth(req.headers.authorization, authMicroService, (error) => {
-            if (!error && !error.error) {
+            if (error && !error.error) {
                 request.get(`${accessMicroService}/info/${req.params.id}`)
                     .then((body) => res.status(status.OK).send(body))
                     .catch((err) => res.status(status.BAD_REQUEST).send(err));
@@ -30,7 +30,7 @@ module.exports = function (userServices, fileServices) {
     // Files shared with an user's email
     router.get('/sharedWith/:email', function (req, res) {
         auth(req.headers.authorization, authMicroService, (error) => {
-            if (!error && !error.error) {
+            if (error && !error.error) {
                 request.get(`${accessMicroService}/sharedWith/${req.params.email}`)
                     .then((body) => res.status(status.OK).send(body))
                     .catch((err) => res.status(status.BAD_REQUEST).send(err));
@@ -43,7 +43,7 @@ module.exports = function (userServices, fileServices) {
     // Files owned by the user
     router.get('/ownedBy/:id', function (req, res) {
         auth(req.headers.authorization, authMicroService, (error) => {
-            if (!error && !error.error) {
+            if (error && !error.error) {
                 request.get(`${accessMicroService}/ownedBy/${req.params.id}`)
                     .then((body) => res.status(status.OK).send(body))
                     .catch((err) => res.status(status.BAD_REQUEST).send(err));
@@ -56,7 +56,7 @@ module.exports = function (userServices, fileServices) {
     // Downloads the file
     router.get('/download/:id/:email', function (req, res) {
         auth(req.headers.authorization, authMicroService, (error) => {
-            if (!error && !error.error) {
+            if (error && !error.error) {
                 request.get(`${accessMicroService}/download/${req.params.id}/${req.params.email}`)
                     .then((body) => res.status(status.OK).send(body))
                     .catch((err) => res.status(status.BAD_REQUEST).send(err));
@@ -69,7 +69,7 @@ module.exports = function (userServices, fileServices) {
     // Delete the file
     router.delete('/delete/:id', function (req, res) {
         auth(req.headers.authorization, authMicroService, (error) => {
-            if (!error && !error.error) {
+            if (error && !error.error) {
                 request.delete(`${deleteMicroService}/delete/file/${req.params.id}`)
                     .then((body) => res.status(status.OK).send(body))
                     .catch((err) => res.status(status.BAD_REQUEST).send(err));
@@ -82,7 +82,7 @@ module.exports = function (userServices, fileServices) {
     // Update the file's metadata
     router.put('/update/:id', function (req, res) {
         auth(req.headers.authorization, authMicroService, (error) => {
-            if (!error && !error.error) {
+            if (error && !error.error) {
                 const file = req.body;
 
                 let updatePromises = [];
@@ -112,7 +112,7 @@ module.exports = function (userServices, fileServices) {
     // Creates an uploads the file
     router.post('/upload/:email', function (req, res) {
         auth(req.headers.authorization, authMicroService, (error) => {
-            if (!error && !error.error) {
+            if (error && !error.error) {
                 request({
                     method: 'POST',
                     url: `${uploadMicroService}/upload/${req.params.email}`,
