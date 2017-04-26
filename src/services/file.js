@@ -57,8 +57,12 @@ module.exports = function (userServices, fileServices) {
     router.get('/download/:id/:email', function (req, res) {
         auth(req.headers.authorization, authMicroService, (error) => {
             if (error && !error.error) {
-                request.get(`${accessMicroService}/download/${req.params.id}/${req.params.email}`)
-                    .then((body) => res.status(status.OK).send(body))
+                request({
+                    method: 'GET',
+                    uri: `${accessMicroService}/download/${req.params.id}/${req.params.email}`,
+                    resolveWithFullResponse: true
+                })
+                    .then((response) => res.status(status.OK).type(response.headers['content-type']).send(response.body))
                     .catch((err) => res.status(status.BAD_REQUEST).send(err));
             } else {
                 res.status(status.BAD_REQUEST).send(error);
