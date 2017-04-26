@@ -71,6 +71,8 @@ services:
   upload_ms:
     image: blinkbox/upload
     environment:
+      HOST_PORT: '4015'
+      HOST_URL: '0.0.0.0'
       DB_PORT: '5984'
       DB_URL: 'couch_db'
     ports:

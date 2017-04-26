@@ -70,7 +70,7 @@ module.exports = function (userServices, fileServices) {
     router.delete('/delete/:id', function (req, res) {
         auth(req.headers.authorization, authMicroService, (error) => {
             if (error && !error.error) {
-                request.delete(`${deleteMicroService}/delete/file/${req.params.id}`)
+                request.delete(`${deleteMicroService}/file/${req.params.id}`)
                     .then((body) => res.status(status.OK).send(body))
                     .catch((err) => res.status(status.BAD_REQUEST).send(err));
             } else {
@@ -115,8 +115,8 @@ module.exports = function (userServices, fileServices) {
             if (error && !error.error) {
                 request({
                     method: 'POST',
-                    url: `${uploadMicroService}/upload/${req.params.email}`,
-                    json: req.body
+                    url: `${uploadMicroService}/${req.params.email}`,
+                    form: req.body
                 })
                     .then((body) => res.status(status.OK).send(body))
                     .catch((err) => res.status(status.BAD_REQUEST).send(err));
