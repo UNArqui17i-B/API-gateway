@@ -94,7 +94,7 @@ module.exports = function (userServices, fileServices) {
                     updatePromises.push(request({
                         method: 'PUT',
                         url: `${updateMicroService}/share/${req.params.id}`,
-                        json: {file: file.shared}
+                        json: {'shared': file: file.shared}
                     }));
                 }
 
