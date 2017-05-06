@@ -1,4 +1,4 @@
-version: '3'
+version: '2'
 services:
   files_db:
     build: ./files_db

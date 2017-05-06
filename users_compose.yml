@@ -1,4 +1,4 @@
-version: '3'
+version: '2'
 services:
   users_db:
     build: ./users_db
