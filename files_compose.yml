@@ -3,7 +3,7 @@ services:
   files_db:
     build: ./files_db
     logging:
-          driver: 'none'
+      driver: 'none'
     ports:
       - '3010:5984'
 
@@ -56,22 +56,3 @@ services:
       HOST_URL: '0.0.0.0'
     links:
       - files_db
-
-  api_gateway:
-    build: .
-    environment:
-      UPDATE_PORT: '4020'
-      UPDATE_HOST: 'update_ms'
-      DELETE_PORT: '4030'
-      DELETE_HOST: 'delete_ms'
-      UPLOAD_PORT: '4015'
-      UPLOAD_HOST: 'upload_ms'
-      ACCESS_PORT: '4025'
-      ACCESS_HOST: 'file_access_ms'
-    ports:
-      - '5000:5000'
-    links:
-      - update_ms
-      - delete_ms
-      - upload_ms
-      - file_access_ms

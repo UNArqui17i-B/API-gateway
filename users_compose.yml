@@ -38,19 +38,3 @@ services:
       PORT: '587'
     ports:
       - '4010:4010'
-
-  api_gateway:
-    build: .
-    environment:
-      USER_PORT: '4000'
-      USER_HOST: 'user_ms'
-      AUTH_PORT: '4005'
-      AUTH_HOST: 'auth_ms'
-      NOTIFICATION_PORT: '4010'
-      NOTIFICATION_HOST: 'notification_ms'
-    ports:
-      - '5000:5000'
-    links:
-      - user_ms
-      - auth_ms
-      - notification_ms

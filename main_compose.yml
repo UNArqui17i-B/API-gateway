@@ -1,0 +1,21 @@
+version: '2'
+services:
+  api_gateway:
+    image: blinkbox/api-gateway
+    environment:
+      USER_PORT: '4000'
+      USER_HOST: 'user_ms'
+      AUTH_PORT: '4005'
+      AUTH_HOST: 'auth_ms'
+      NOTIFICATION_PORT: '4010'
+      NOTIFICATION_HOST: 'notification_ms'
+      UPDATE_PORT: '4020'
+      UPDATE_HOST: 'update_ms'
+      DELETE_PORT: '4030'
+      DELETE_HOST: 'delete_ms'
+      UPLOAD_PORT: '4015'
+      UPLOAD_HOST: 'upload_ms'
+      ACCESS_PORT: '4025'
+      ACCESS_HOST: 'file_access_ms'
+    ports:
+      - '5000:5000'
