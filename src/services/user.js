@@ -38,7 +38,7 @@ module.exports = function (userServices) {
     // Update a user
     router.put('/:id', function (req, res) {
         auth(req.headers.authorization, authMicroService, (error) => {
-            if (!error && !error.error) {
+            if (error && !error.error) {
                 request({
                     method: 'PUT',
                     url: `${userMicroService}/${req.params.id}`,
@@ -55,7 +55,7 @@ module.exports = function (userServices) {
     // Delete a user
     router.delete('/:id', function (req, res) {
         auth(req.headers.authorization, authMicroService, (error) => {
-            if (!error && !error.error) {
+            if (error && !error.error) {
                 request.delete(`${userMicroService}/${req.params.id}`)
                     .then((body) => res.status(status.OK).send(body))
                     .catch((err) => res.status(status.BAD_REQUEST).send(err));
